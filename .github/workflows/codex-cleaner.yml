@@ -29,7 +29,8 @@ jobs:
           # This project keeps CLI validation here instead of adding formula tests.
           brew audit --strict --skip-style msdx321/tap/codex-cleaner
           brew audit --except-cops FormulaAuditStrict/TestPresent msdx321/tap/codex-cleaner
-          brew install --build-from-source msdx321/tap/codex-cleaner
+          test -z "$(brew deps msdx321/tap/codex-cleaner)"
+          brew install msdx321/tap/codex-cleaner
           codex-cleaner --version
           preview_home="$(mktemp -d)"
           codex-cleaner --codex-home "$preview_home" --json
