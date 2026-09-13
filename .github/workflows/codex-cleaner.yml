@@ -1,0 +1,38 @@
+name: Verify codex-cleaner release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - Formula/codex-cleaner.rb
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codex-cleaner-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  formula:
+    runs-on: macos-26
+    timeout-minutes: 30
+    env:
+      HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verify formula and installation
+        run: |
+          brew tap msdx321/tap "$GITHUB_WORKSPACE"
+          brew style msdx321/tap/codex-cleaner
+          # This project keeps CLI validation here instead of adding formula tests.
+          brew audit --strict --skip-style msdx321/tap/codex-cleaner
+          brew audit --except-cops FormulaAuditStrict/TestPresent msdx321/tap/codex-cleaner
+          brew install --build-from-source msdx321/tap/codex-cleaner
+          codex-cleaner --version
+          preview_home="$(mktemp -d)"
+          codex-cleaner --codex-home "$preview_home" --json
+          codex-cleaner --codex-home "$preview_home" --apply --json
+          rmdir "$preview_home"
+          brew uninstall codex-cleaner

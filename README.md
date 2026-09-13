@@ -32,3 +32,29 @@ It downloads the DMG, verifies its SHA-256 against the release's `SHA256SUMS`, a
 Homebrew style, audit, and installation checks must pass before it commits an update.
 You can also run the workflow manually after publishing a release.
 It uses this repository's `GITHUB_TOKEN`; no cross-repository token is needed.
+
+## Codex Cleaner
+
+Install the latest published [codex-cleaner](https://github.com/msdx321/codex-cleaner)
+release to preview and prune old generated Codex state:
+
+```sh
+brew install msdx321/tap/codex-cleaner
+codex-cleaner --json
+```
+
+Cleanup defaults to dry-run. Review its output and quit Codex before running
+`codex-cleaner --apply`. The formula builds from source with Rust and supports
+macOS and Linux. Use `brew upgrade codex-cleaner` after `brew update` to upgrade,
+or `brew uninstall codex-cleaner` to remove the tool without changing Codex data.
+
+Publishing a stable codex-cleaner release runs its **Update Homebrew tap** workflow.
+The updater validates the source archive's package version and records its SHA-256;
+an existing release with a changed checksum is rejected. It pushes the formula
+update using `HOMEBREW_TAP_DEPLOY_KEY` configured in the codex-cleaner repository.
+
+The tap's **Verify codex-cleaner release** CI runs only on pushes to `main` that
+change `Formula/codex-cleaner.rb`, matching ProxyBear's cask verification pattern.
+It runs Homebrew style, audit, installation, and CLI checks. There are no scheduled
+or pull-request runs. `brew install --HEAD msdx321/tap/codex-cleaner` builds the
+default branch instead of the latest release.
