@@ -1,6 +1,6 @@
 cask "proxybear" do
-  version "1.2.1"
-  sha256 "dbe75fa8c735a887bf990f33f2c5e9f36e4a7f250417909c381789c26a93ece4"
+  version "1.2.2"
+  sha256 "7254f3a8feb17e83d9dfa551cbb1222be2c635d9a3402dfa15c913e94d2b7276"
 
   url "https://github.com/msdx321/proxybear/releases/download/v#{version}/ProxyBear-#{version}.dmg"
   name "ProxyBear"
