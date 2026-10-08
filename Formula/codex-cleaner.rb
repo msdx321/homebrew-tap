@@ -1,7 +1,6 @@
 class CodexCleaner < Formula
   desc "Prune old generated Codex state with a dry-run preview"
   homepage "https://github.com/msdx321/codex-cleaner"
-  version "1.1.1"
   license "MIT"
 
   on_macos do

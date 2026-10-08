@@ -77,7 +77,6 @@ formula.write_text(
     "class CodexCleaner < Formula\n"
     '  desc "Prune old generated Codex state with a dry-run preview"\n'
     '  homepage "https://github.com/msdx321/codex-cleaner"\n'
-    f'  version "{version}"\n'
     '  license "MIT"\n\n' + "\n".join(blocks) + "\n  def install\n"
     '    bin.install "codex-cleaner"\n'
     "  end\n"
