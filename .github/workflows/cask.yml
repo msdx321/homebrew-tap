@@ -27,6 +27,7 @@ jobs:
       - name: Verify cask and install the app
         run: |
           brew tap msdx321/tap "$GITHUB_WORKSPACE"
+          brew trust --tap msdx321/tap
           brew style msdx321/tap/proxybear
           brew audit --cask --strict msdx321/tap/proxybear
           brew install --cask msdx321/tap/proxybear
